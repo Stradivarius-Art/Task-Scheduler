@@ -1,0 +1,127 @@
+<?php
+
+namespace App\Services;
+
+use Carbon\Carbon;
+use App\Models\User;
+use App\Facades\Card;
+use Illuminate\Http\JsonResponse;
+use App\Contract\UserRepositoryInterface;
+use App\Exceptions\OldUserBadRequestException;
+use App\Exceptions\InvalidUserCredentialsException;
+
+class AuthorizationService
+{
+    public function __construct(
+        private UserRepositoryInterface $repository
+    ) {}
+
+    /**
+     * @param array $data
+     * @phpstan-param array{email: string, password: string} $data
+     */
+    public function register(array $data): JsonResponse
+    {
+        $oldUser = $this->repository->oldUser($data['email']);
+
+        if ($oldUser) {
+            throw new OldUserBadRequestException();
+        }
+
+        $user = $this->repository->createUser($data);
+
+        Card::create($user->id);
+
+        $token = $user->createToken('accessToken', expiresAt: Carbon::now()
+            ->addDays(7))
+            ->plainTextToken;
+
+        return response()->json([
+            'user' => [
+                'id' => $user->id,
+                'createdAt' => $user->created_at,
+                'updatedAt' => $user->updated_at,
+                'email' => $user->email,
+                'password' => $user->password,
+                'name' => $user->name,
+                'avatarPath' => $user->avatarPath
+            ],
+            'accessToken' => $token
+        ], 201);
+    }
+
+    /**
+     * @param array $data
+     * @phpstan-param array{email: string, password: string} $data
+     */
+    public function login(array $data): JsonResponse
+    {
+        if (!auth()->guard('web')->attempt([
+            'email' => $data['email'],
+            'password' => $data['password']
+        ])) {
+            throw new InvalidUserCredentialsException();
+        }
+        /**
+         * @var User $user
+         */
+        $user = auth()->user();
+
+        $token = $user->createToken('accessToken')->plainTextToken;
+
+        return response()->json([
+            'user' => [
+                'id' => $user->id,
+                'createdAt' => $user->created_at,
+                'updatedAt' => $user->updated_at,
+                'email' => $user->email,
+                'name' => $user->name,
+                'avatarPath' => $user->avatarPath
+            ],
+            'accessToken' => $token
+        ]);
+    }
+}
+
+<?php
+
+namespace App\Facades;
+
+use Illuminate\Support\Facades\Facade;
+
+/**
+ * @method static \Illuminate\Http\JsonResponse register(array $data)
+ * @method static \Illuminate\Http\JsonResponse login(array $data)
+ * @see  \App\Services\AuthorizationService
+ */
+class Authorization extends Facade
+{
+    protected static function getFacadeAccessor(): string
+    {
+        return 'auth.facade';
+    }
+}
+
+<?php
+
+namespace App\Http\Controllers\Api\Auth;
+
+use App\Contract\UserRepositoryInterface;
+use Illuminate\Http\Request;
+use App\Facades\Authorization;
+use App\Data\Auth\AuthData;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+
+class AuthorizationController extends Controller
+{
+    public function register(AuthData $data): JsonResponse
+    {
+        return Authorization::register($data->toArray());
+    }
+
+    public function login(AuthData $data): JsonResponse
+    {
+        return Authorization::login($data->toArray());
+    }
+}
