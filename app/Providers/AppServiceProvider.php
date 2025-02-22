@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\Auth\AuthService;
+use App\Services\Task\TaskService;
 use App\Services\User\UserService;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind('user.facade', UserService::class);
         $this->app->bind('auth.facade', AuthService::class);
+        $this->app->bind('task.facade', TaskService::class);
     }
 }
