@@ -22,12 +22,21 @@ class RefreshTokenMiddleware
                 if (!$refreshToken) {
                     throw new UnauthorizedHttpException('', 'Refresh token not found');
                 }
+
+                // Генерируем новый accessToken
                 $newAccessToken = JWTAuth::setToken($refreshToken)->claims(['type' => 'access'])->refresh();
 
+                // Обновляем заголовок запроса
                 $request->headers->set('Authorization', 'Bearer ' . $newAccessToken);
 
+                // Продолжаем запрос
                 $response = $next($request);
-                return $response->header('Authorization', 'Bearer ' . $newAccessToken);
+
+                // Возвращаем новый accessToken в теле ответа
+                $responseData = $response->getData(true); // Получаем данные ответа
+                $responseData['newAccessToken'] = $newAccessToken;
+
+                return response()->json($responseData);
             } catch (\Exception $e) {
                 throw new UnauthorizedHttpException('', 'Unable to refresh token');
             }

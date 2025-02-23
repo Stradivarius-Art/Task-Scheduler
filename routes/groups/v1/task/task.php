@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::controller(TaskController::class)
-        ->middleware(['auth:api', 'refresh.token'])
+        ->middleware('auth:api')
         ->group(function () {
             Route::get('user/tasks', 'index')->name('get.tasks');
             Route::post('user/tasks', 'create')->name('create.tasks');

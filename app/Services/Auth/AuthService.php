@@ -35,8 +35,7 @@ class AuthService
 
     private function issueTokens(ModelsUser $user): array
     {
-        // dd($user);
-        JWTAuth::factory()->setTTL(15);
+        JWTAuth::factory()->setTTL(60);
         $accessToken = JWTAuth::claims(['type' => 'access', 'sub' => $user->id])->fromUser($user);
 
         JWTAuth::factory()->setTTL(10080);
