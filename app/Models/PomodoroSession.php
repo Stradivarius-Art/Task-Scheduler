@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int|null $user_id
@@ -40,7 +40,8 @@ class PomodoroSession extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'is_completed'
+        'is_completed',
+        'user_id'
     ];
 
     /**

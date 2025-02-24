@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Http\Resources\PomodoroSessionResource;
 use App\Services\Auth\AuthService;
 use App\Services\Task\TaskService;
 use App\Services\User\UserService;
 use App\Services\Time\TimeBlockService;
+use App\Services\Time\TimerService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        PomodoroSessionResource::withoutWrapping();
     }
 
     private function facades(): void
@@ -32,5 +34,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('auth.facade', AuthService::class);
         $this->app->bind('task.facade', TaskService::class);
         $this->app->bind('timeBlock.facade', TimeBlockService::class);
+        $this->app->bind('timer.facade', TimerService::class);
     }
 }

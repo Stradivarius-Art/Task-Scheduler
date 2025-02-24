@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \Illuminate\Database\Eloquent\Model show(int $id)
+ * @method static null|\Illuminate\Database\Eloquent\Model getUserUnique(int $id)
  * @method static null|\Illuminate\Database\Eloquent\Model getByEmail(string $email)
  * @method static array getByProfile(int $id)
  * @method static \Illuminate\Database\Eloquent\Model createUser(array $attributes)

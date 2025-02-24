@@ -33,6 +33,14 @@ class UserService
             ->find($id);
     }
 
+    public function getUserUnique(int $id): Model
+    {
+        return User::query()
+            ->where('id', $id)
+            ->select('intervalsCount')
+            ->firstOrFail();
+    }
+
     public function getByEmail(string $email): ?Model
     {
         return User::query()
