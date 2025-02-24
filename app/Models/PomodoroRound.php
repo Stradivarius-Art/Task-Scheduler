@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use App\Models\PomodoroSession;
+use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * 
  *
- * @property int $id
- * @property int|null $pomodoro_session_id
+ *
+ * @property string $id
+ * @property string|null $pomodoro_session_id
  * @property int $totalSeconds
  * @property bool|null $is_completed
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -30,7 +31,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class PomodoroRound extends Model
 {
-    use HasFactory;
+    use HasFactory, UUID;
 
     /**
      * The attributes that are mass assignable.

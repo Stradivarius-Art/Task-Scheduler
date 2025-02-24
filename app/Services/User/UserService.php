@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\User;
 
-use App\Models\PomodoroRound;
-use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +13,7 @@ class UserService
 {
     private User $user;
 
-    public function show(int $id): Model
+    public function show(string $id): Model
     {
         return User::query()
             ->select([
@@ -33,7 +31,7 @@ class UserService
             ->find($id);
     }
 
-    public function getUserUnique(int $id): Model
+    public function getUserUnique(string $id): Model
     {
         return User::query()
             ->where('id', $id)
@@ -48,7 +46,7 @@ class UserService
             ->first();
     }
 
-    public function getByProfile(int $id): array
+    public function getByProfile(string $id): array
     {
         /**
          * @var User $profile

@@ -31,7 +31,7 @@ class TimeBlockController extends Controller
 
     public function update(TimeBlockData $data, ModelsTimeBlock $timeBlock): ?Model
     {
-        return TimeBlock::setTimeBlock($timeBlock)->update($data->toArray(), auth()->id());
+        return TimeBlock::setTimeBlock($timeBlock)->update($data->toArray());
     }
 
     public function delete(ModelsTimeBlock $timeBlock): ?ModelsTimeBlock

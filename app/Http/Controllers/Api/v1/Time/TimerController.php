@@ -8,7 +8,6 @@ use App\Data\Timer\TimerRoundData;
 use App\Data\Timer\TimerSessionData;
 use App\Facades\Timer;
 use App\Models\PomodoroRound;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PomodoroSessionResource;
 use App\Models\PomodoroSession;
@@ -35,7 +34,7 @@ class TimerController extends Controller
     public function update(TimerSessionData $data, PomodoroSession $pomodoroSession): ?Model
     {
         return Timer::setPomodoroSession($pomodoroSession)
-            ->updateSession($data->toArray(), auth()->id());
+            ->updateSession($data->toArray());
     }
 
     public function delete(PomodoroSession $pomodoroSession): ?PomodoroSession

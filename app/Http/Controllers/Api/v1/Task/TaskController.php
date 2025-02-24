@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Api\v1\Task;
 
 use App\Facades\Task;
 use App\Data\Task\TaskData;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Task as ModelsTask;
 use Illuminate\Database\Eloquent\Model;
@@ -26,7 +25,7 @@ class TaskController extends Controller
 
     public function update(TaskData $data, ModelsTask $task): ?Model
     {
-        return Task::setTask($task)->update($data->toArray(), auth()->id());
+        return Task::setTask($task)->update($data->toArray());
     }
 
     public function delete(ModelsTask $task): ?ModelsTask

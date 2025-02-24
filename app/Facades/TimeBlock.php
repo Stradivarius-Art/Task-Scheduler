@@ -5,9 +5,9 @@ namespace App\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Illuminate\Database\Eloquent\Collection getAll(int $userId)
- * @method static \Illuminate\Database\Eloquent\Model create(array $data, int $userId)
- * @method static \Illuminate\Database\Eloquent\Model|null update(array $data, int $userId)
+ * @method static \Illuminate\Database\Eloquent\Collection getAll(string $userId)
+ * @method static \Illuminate\Database\Eloquent\Model create(array $data, string $userId)
+ * @method static \Illuminate\Database\Eloquent\Model|null update(array $data)
  * @method static \App\Services\Time\TimeBlockService setTimeBlock(\App\Models\TimeBlock $timeBlock)
  * @method static mixed updateOrder(array $ids)
  * @see \App\Services\Time\TimeBlockService

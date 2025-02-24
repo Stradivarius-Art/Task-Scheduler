@@ -15,7 +15,7 @@ class TimerService
     private PomodoroSession $pomodoroSession;
     private PomodoroRound $pomodoroRound;
 
-    public function getTodaySession(int $userId): ?Model
+    public function getTodaySession(string $userId): ?Model
     {
         $todayStart = Carbon::today();
         $todayEnd = Carbon::tomorrow();
@@ -31,7 +31,7 @@ class TimerService
         return $pomodoroSession;
     }
 
-    public function create(int $userId): PomodoroSessionResource
+    public function create(string $userId): PomodoroSessionResource
     {
         $todaySession = $this->getTodaySession($userId);
 
@@ -59,15 +59,9 @@ class TimerService
         return new PomodoroSessionResource($pomodoroSession);
     }
 
-    public function updateSession(array $data, int $userId): ?Model
+    public function updateSession(array $data): ?Model
     {
-        $pomodoroSession = $this->pomodoroSession
-            ->where('user_id', $userId)
-            ->first();
-
-        if (!$pomodoroSession) {
-            return null;
-        }
+        $pomodoroSession = $this->pomodoroSession;
 
         $pomodoroSession->update(
             [
@@ -75,7 +69,7 @@ class TimerService
             ]
         );
 
-        return $this->pomodoroSession->find($pomodoroSession->id);
+        return $pomodoroSession->find($pomodoroSession->id);
     }
 
     public function updateRound(array $data): ?Model

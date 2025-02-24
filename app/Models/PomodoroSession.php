@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\PomodoroRound;
+use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,8 +13,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  *
  *
- * @property int $id
- * @property int|null $user_id
+ * @property string $id
+ * @property string|null $user_id
  * @property bool|null $is_completed
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -32,7 +33,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class PomodoroSession extends Model
 {
-    use HasFactory;
+    use HasFactory, UUID;
 
     /**
      * The attributes that are mass assignable.

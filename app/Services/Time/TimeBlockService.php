@@ -12,7 +12,7 @@ class TimeBlockService
 {
     private TimeBlock $timeBlock;
 
-    public function getAll(int $userId): Collection
+    public function getAll(string $userId): Collection
     {
         return TimeBlock::query()->select([
             'id',
@@ -29,7 +29,7 @@ class TimeBlockService
             ->get();
     }
 
-    public function create(array $data, int $userId): Model
+    public function create(array $data, string $userId): Model
     {
         $user = User::findOrFail($userId);
         return $user->timeBlocks()
@@ -50,15 +50,9 @@ class TimeBlockService
             ]);
     }
 
-    public function update(array $data, int $userId): ?Model
+    public function update(array $data): ?Model
     {
-        $timeBlock = $this->timeBlock
-            ->where('user_id', $userId)
-            ->first();
-
-        if (!$timeBlock) {
-            return null;
-        }
+        $timeBlock = $this->timeBlock;
 
         $timeBlock->update([
             'name' => $data['name'] ?? $timeBlock->name,
@@ -67,7 +61,7 @@ class TimeBlockService
             'order' => $data['order'] ?? $timeBlock->order,
         ]);
 
-        return $this->timeBlock->find($timeBlock->id);
+        return $timeBlock->find($timeBlock->id);
     }
 
     public function updateOrder(array $ids): mixed

@@ -4,15 +4,16 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Enums\Priority;
+use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * 
  *
- * @property int $id
- * @property int|null $user_id
+ *
+ * @property string $id
+ * @property string|null $user_id
  * @property string $name
  * @property Priority|null $priority
  * @property bool|null $is_completed
@@ -33,7 +34,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Task extends Model
 {
-    use HasFactory;
+    use HasFactory, UUID;
 
     /**
      * The attributes that are mass assignable.

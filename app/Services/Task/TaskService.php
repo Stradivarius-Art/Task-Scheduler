@@ -12,7 +12,7 @@ class TaskService
 {
     private Task $task;
 
-    public function getAll(int $userId): Collection
+    public function getAll(string $userId): Collection
     {
         return Task::query()->select([
             'id',
@@ -25,7 +25,7 @@ class TaskService
         ])->where('user_id', $userId)->get();
     }
 
-    public function create(array $data, int $userId): Model
+    public function create(array $data, string $userId): Model
     {
         $user = User::findOrFail($userId);
         return $user->tasks()
@@ -45,15 +45,9 @@ class TaskService
             ]);
     }
 
-    public function update(array $data, int $userId): ?Model
+    public function update(array $data): ?Model
     {
-        $task = $this->task
-            ->where('user_id', $userId)
-            ->first();
-
-        if (!$task) {
-            return null;
-        }
+        $task = $this->task;
 
         $task->update([
             'name' => $data['name'] ?? $task->name,
@@ -62,7 +56,7 @@ class TaskService
             'priority' => $data['priority'] ?? $task->priority,
         ]);
 
-        return $this->task->find($task->id);
+        return $task->find($task->id);
     }
 
     public function setTask(Task $task): static

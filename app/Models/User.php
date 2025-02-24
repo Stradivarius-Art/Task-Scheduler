@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Models\Task;
 use App\Models\TimeBlock;
 use App\Models\PomodoroSession;
+use App\Traits\UUID;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 /**
  *
  *
- * @property int $id
+ * @property string $id
  * @property string|null $name
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
@@ -55,7 +56,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, UUID;
 
     /**
      * The attributes that are mass assignable.

@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * 
  *
- * @property int $id
- * @property int|null $user_id
+ *
+ * @property string $id
+ * @property string|null $user_id
  * @property string $name
  * @property string|null $color
  * @property int $duration
@@ -34,7 +35,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class TimeBlock extends Model
 {
-    use HasFactory;
+    use HasFactory, UUID;
 
     /**
      * The attributes that are mass assignable.
