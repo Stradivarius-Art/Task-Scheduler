@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- *
+ * 
  *
  * @property string $id
  * @property string|null $user_id
@@ -30,6 +30,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|Task wherePriority($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereUserId($value)
+ * @property string|null $qr_code_base64
+ * @property string|null $google_calendar_event_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereGoogleCalendarEventId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereQrCodeBase64($value)
  * @mixin \Eloquent
  */
 class Task extends Model
@@ -44,7 +48,9 @@ class Task extends Model
     protected $fillable = [
         'name',
         'priority',
-        'is_completed'
+        'is_completed',
+        'qr_code_base64',
+        'google_calendar_event_id'
     ];
 
     /**

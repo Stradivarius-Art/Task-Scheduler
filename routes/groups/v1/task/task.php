@@ -11,5 +11,9 @@ Route::prefix('v1')->group(function () {
             Route::post('user/tasks', 'create')->name('create.tasks');
             Route::put('user/tasks/{task}', 'update')->name('update.tasks');
             Route::delete('user/tasks/{task}', 'delete')->name('delete.tasks');
+            Route::get('/user/tasks/{task}/qr', 'qrCode')->name('qrCode.task');
         });
+
+    Route::patch('/user/tasks/{task}/complete', [TaskController::class, 'completeTask'])
+        ->name('complete.task');
 });

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Illuminate\Http\JsonResponse register(array $data)
  * @method static \Illuminate\Http\JsonResponse removeRefreshTokenResponse()
  * @method static \Illuminate\Http\JsonResponse getNewTokens(string $refreshToken)
+ * @method static \Illuminate\Http\JsonResponse handleOauthCallback($socialUser, string $provider)
  * @see \App\Services\Auth\AuthService
  */
 class Auth extends Facade

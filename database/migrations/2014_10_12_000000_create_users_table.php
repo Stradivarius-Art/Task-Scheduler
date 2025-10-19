@@ -16,11 +16,13 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->integer('workInterval')->default(50)->nullable();
             $table->integer('breakInterval')->default(10)->nullable();
             $table->integer('intervalsCount')->default(7)->nullable();
             $table->rememberToken();
+            $table->string('oauth_provider')->nullable();
+            $table->string('oauth_id')->nullable();
             $table->timestamps();
         });
     }

@@ -6,8 +6,9 @@ namespace App\Http\Controllers\Api\v1\Task;
 
 use App\Facades\Task;
 use App\Data\Task\TaskData;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use App\Models\Task as ModelsTask;
+use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -32,5 +33,15 @@ class TaskController extends Controller
     {
         $isDeleted = $task->delete();
         return $isDeleted ? $task : null;
+    }
+
+    public function qrCode(ModelsTask $task): JsonResponse
+    {
+        return Task::setTask($task)->qrCodeGenerate();
+    }
+
+    public function completeTask(ModelsTask $task): JsonResponse
+    {
+        return Task::setTask($task)->completeTask();
     }
 }

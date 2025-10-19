@@ -132,4 +132,38 @@ class AuthService
             'accessToken' => $tokens['accessToken'],
         ])->withCookie($cookie);
     }
+
+    public function handleOauthCallback($socialUser, string $provider): JsonResponse
+    {
+        /**
+         * @var ModelsUser $user
+         */
+        $user = User::getByEmail($socialUser->getEmail());
+
+        if (!$user) {
+            $user = ModelsUser::query()->create([
+                'name' => $socialUser->getName(),
+                'email' => $socialUser->getEmail(),
+                'oauth_provider' => $provider,
+                'oauth_id' => $socialUser->getId()
+            ]);
+        } else {
+            if (!$user->oauth_provider) {
+                $user->update([
+                    'oauth_provider' => $provider,
+                    'oauth_id' => $socialUser->getId()
+                ]);
+            } elseif ($user->oauth_provider !== $provider) {
+                throw new UnauthorizedHttpException('', 'This email is already registered via another provider.');
+            }
+        }
+
+        $tokens = $this->issueTokens($user);
+
+        $cookie = cookie('refreshToken', $tokens['refreshToken'], 10080, null, 'localhost', false, true, sameSite: 'lax');
+        return response()->json([
+            'user' => $user,
+            'accessToken' => $tokens['accessToken'],
+        ])->withCookie($cookie);
+    }
 }

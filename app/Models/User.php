@@ -14,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
- *
+ * 
  *
  * @property string $id
  * @property string|null $name
@@ -35,8 +35,6 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property-read int|null $tasks_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, TimeBlock> $timeBlocks
  * @property-read int|null $time_blocks_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
- * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -52,6 +50,16 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereWorkInterval($value)
+ * @property string|null $google_calendar_access_token
+ * @property string|null $google_calendar_refresh_token
+ * @property string|null $google_calendar_token_expires_at
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGoogleCalendarAccessToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGoogleCalendarRefreshToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGoogleCalendarTokenExpiresAt($value)
+ * @property string|null $oauth_provider
+ * @property int $oauth_id
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereOauthId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereOauthProvider($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable implements JWTSubject
@@ -69,7 +77,12 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'workInterval',
         'breakInterval',
-        'intervalsCount'
+        'intervalsCount',
+        'google_calendar_access_token',
+        'google_calendar_refresh_token',
+        'google_calendar_token_expires_at',
+        'oauth_provider',
+        'oauth_id'
     ];
 
     /**
